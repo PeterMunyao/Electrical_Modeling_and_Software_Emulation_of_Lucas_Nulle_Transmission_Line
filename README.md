@@ -9,4 +9,4 @@ pled modeling and validation structure. The approach combines a physical hardwar
 transmission model) with Python-based distributed-parameter simulations derived from the Telegrapher’s equations. The classical
 power transfer capability from P − δ relationship is evaluated under both lumped and distributed representations, including high
 capacitive-compensated transmission conditions where voltage stability and reactive power sensitivity are strongly dependent on
-line impedance.
+total line impedance.
