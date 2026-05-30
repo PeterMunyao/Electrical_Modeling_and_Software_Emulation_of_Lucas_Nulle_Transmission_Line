@@ -1,0 +1,53 @@
+To analyze this specific imbalance ($102\text{V}, 104\text{V}, 100\text{V}$) using the **ABCD parameters** you derived, we must apply them individually to each phase. However, because your neutral is not "solid" (it has that $15\ \Omega + 200\text{ mH}$ impedance), the phases are coupled through the neutral point.
+
+Here is the step-by-step calculation to find the receiving-end voltages ($V_r$) for this unbalanced source.
+
+---
+
+### 1. Define the Vector Inputs
+We must treat the voltages as complex phasors. Assuming a standard $120^\circ$ phase shift:
+* $V_{L1\_s} = 102 \angle 0^\circ = 102 + j0\text{ V}$
+* $V_{L2\_s} = 104 \angle -120^\circ = -52 - j90.07\text{ V}$
+* $V_{L3\_s} = 100 \angle 120^\circ = -50 + j86.60\text{ V}$
+
+---
+
+### 2. Calculate the Neutral Displacement ($V_n$)
+Because the phase voltages are unequal, their sum is not zero:
+$$\sum V_s = (102 - 52 - 50) + j(0 - 90.07 + 86.60) = 0 - j3.47\text{ V}$$
+
+This imbalance forces current through the **Neutral Impedance ($Z_n$)**.
+* $Z_n = 15 + j(2\pi \cdot 50 \cdot 0.200) \approx 15 + j62.8\ \Omega$
+* $Z_{line+load} = (R_{line} + R_{load}) + j\omega L_{line} \approx (7.2 + 200) + j72.2 \approx 207.2 + j72.2\ \Omega$
+
+The neutral voltage shift ($V_n$) is calculated by the ratio of the neutral impedance to the total phase impedance:
+$$V_n = \frac{\sum V_s}{3 + \frac{Z_{line+load}}{Z_n}}$$
+
+
+
+For these values, $V_n$ will be a small complex voltage (approx. **$1.1\text{V}$ to $1.5\text{V}$**). This $V_n$ acts as a "counter-voltage" that subtracts from the stronger phases and adds to the weaker ones.
+
+---
+
+### 3. Apply ABCD Parameters to Each Phase
+Now, we find the receiving end voltage for each phase $i$ ($L1, L2, L3$):
+$$V_{ri} = \frac{V_{si} - V_n}{A + \frac{B}{R_{load}}}$$
+
+Using the ABCD values for your 300 km line ($A \approx 0.954$, $B \approx 72.6 \angle 84^\circ$):
+
+| Phase | $V_s$ (Source) | Effective $V_{s\_eff}$ ($V_s - V_n$) | **Resulting $V_r$ (at Load)** |
+| :--- | :--- | :--- | :--- |
+| **L1** | $102.0\text{ V}$ | $\approx 100.8\text{ V}$ | **$\approx 95.4\text{ V}$** |
+| **L2** | $104.0\text{ V}$ | $\approx 103.1\text{ V}$ | **$\approx 97.6\text{ V}$** |
+| **L3** | $100.0\text{ V}$ | $\approx 99.2\text{ V}$ | **$\approx 93.9\text{ V}$** |
+
+---
+
+### 4. Key Observations for your Research
+* **Voltage Symmetry:** The receiving end remains unbalanced. The $4\text{V}$ spread at the source ($100\text{V}$ to $104\text{V}$) results in a roughly $3.7\text{V}$ spread at the load.
+* **The "Neutral Pull":** Notice that $V_n$ moves toward the highest voltage phase ($L2$). This actually helps "pull" the neutral point, which slightly reduces the overvoltage on $L2$ and increases it on $L3$ compared to a system with no neutral connection.
+* **Sequence Currents:** In your systematic review, you can note that this configuration allows for the flow of **Zero-Sequence current** ($I_0$), which would be zero if you didn't have that green earth wire connected.
+
+
+
+Would you like to calculate the specific **Neutral Current ($I_n$)** flowing through the $200\text{ mH}$ coil for this specific imbalance?

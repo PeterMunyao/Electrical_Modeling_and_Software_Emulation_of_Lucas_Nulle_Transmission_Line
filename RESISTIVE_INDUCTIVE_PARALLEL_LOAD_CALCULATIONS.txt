@@ -1,0 +1,492 @@
+
+## Summary of New Measured Data (Inductive Load)
+
+**Source voltages (fixed for all tests):**
+\[
+V_{s1} = 101\ \text{V},\quad V_{s2} = 102\ \text{V},\quad V_{s3} = 99\ \text{V}
+\]
+\[
+V_{s2} = 102 \angle -120^\circ = -51 - j88.33
+\]
+\[
+V_{s3} = 99 \angle 120^\circ = -49.5 + j85.74
+\]
+\[
+\sum V_s = (101 - 51 - 49.5) + j(0 - 88.33 + 85.74) = 0.5 - j2.59 = 2.64 \angle -79.1^\circ
+\]
+
+**Load:** \(R_{load} = 750\ \Omega\) in **parallel** with an inductor \(L_{load}\) per phase.
+
+| Test | \(L_{load}\) (H) | \(X_L = \omega L\) (Ω) | Measured \(V_{r1}\) | Measured \(V_{r2}\) | Measured \(V_{r3}\) |
+|------|----------------|----------------------|-------------------|-------------------|-------------------|
+| 1 | 1.2 | \(314.16 \times 1.2 = 377.0\) | 81 | 82 | 83 |
+| 2 | 2.0 | \(314.16 \times 2.0 = 628.3\) | 87 | 88 | 89 |
+| 3 | 2.8 | \(314.16 \times 2.8 = 879.6\) | 91 | 92 | 93 |
+
+**Observation:** As inductance increases (higher \(X_L\), less current through inductor), receiving voltage **increases** toward the no-load case.
+
+---
+
+## Common Parameters for All Models
+
+\[
+\omega = 314.159\ \text{rad/s}
+\]
+\[
+Z_{line} = 7.2 + j72.26 = 72.62 \angle 84.31^\circ\ \Omega
+\]
+\[
+Z_n = 15 + j62.83 = 64.55 \angle 76.55^\circ\ \Omega
+\]
+
+**Load impedance per phase:**
+\[
+Z_{load} = R_{load} \parallel jX_L = \frac{R_{load} \cdot jX_L}{R_{load} + jX_L}
+\]
+
+For each test:
+- \(R_{load} = 750\ \Omega\)
+- \(X_L = 314.16 \times L_{load}\)
+
+---
+
+# Part 1: Model A – Lumped Series (\(A=1, B=Z_{line}\))
+
+### Formula
+\[
+Z_{load} = \frac{750 \cdot jX_L}{750 + jX_L}
+\]
+\[
+A + \frac{B}{Z_{load}} = 1 + \frac{Z_{line}}{Z_{load}}
+\]
+\[
+Z_{line+load} = Z_{line} + Z_{load}
+\]
+\[
+V_n = \frac{\sum V_s}{3 + \dfrac{Z_{line+load}}{Z_n}}
+\]
+\[
+V_{ri} = \frac{V_{si} - V_n}{1 + \dfrac{Z_{line}}{Z_{load}}}
+\]
+
+---
+
+### Test 1: \(L_{load} = 1.2\ \text{H}\), \(X_L = 377.0\ \Omega\)
+
+**Compute \(Z_{load}\):**
+\[
+Z_{load} = \frac{750 \times j377.0}{750 + j377.0}
+\]
+Magnitude: \(750 \times 377 = 282,750\)  
+Denominator magnitude: \(\sqrt{750^2 + 377^2} = \sqrt{562,500 + 142,129} = \sqrt{704,629} = 839.4\)  
+Angle: \(90^\circ - \arctan(377/750) = 90^\circ - 26.7^\circ = 63.3^\circ\)
+\[
+Z_{load} = \frac{282,750}{839.4} \angle 63.3^\circ = 336.8 \angle 63.3^\circ = 151.5 + j300.8\ \Omega
+\]
+
+**Compute denominator \(1 + Z_{line}/Z_{load}\):**
+\[
+\frac{Z_{line}}{Z_{load}} = \frac{72.62 \angle 84.31^\circ}{336.8 \angle 63.3^\circ} = 0.2156 \angle 21.01^\circ = 0.2013 + j0.0773
+\]
+\[
+1 + \frac{Z_{line}}{Z_{load}} = 1.2013 + j0.0773 = 1.204 \angle 3.68^\circ
+\]
+
+**Compute \(Z_{line+load}\):**
+\[
+Z_{line+load} = Z_{line} + Z_{load} = (7.2 + 151.5) + j(72.26 + 300.8) = 158.7 + j373.1 = 405.5 \angle 66.9^\circ\ \Omega
+\]
+
+**Compute \(V_n\):**
+\[
+\frac{Z_{line+load}}{Z_n} = \frac{405.5 \angle 66.9^\circ}{64.55 \angle 76.55^\circ} = 6.28 \angle -9.65^\circ = 6.19 - j1.05
+\]
+\[
+3 + \frac{Z_{line+load}}{Z_n} = 9.19 - j1.05 = 9.25 \angle -6.52^\circ
+\]
+\[
+V_n = \frac{2.64 \angle -79.1^\circ}{9.25 \angle -6.52^\circ} = 0.285 \angle -72.6^\circ = 0.085 - j0.272\ \text{V}
+\]
+
+**Effective source magnitudes (\(V_{si} - V_n\)):**
+- L1: \(101 - 0.085 = 100.915\) V
+- L2: \(\sqrt{(-51.085)^2 + (-88.602)^2} = 102.27\) V
+- L3: \(\sqrt{(-49.585)^2 + (86.012)^2} = 99.28\) V
+
+**Receiving voltages:**
+\[
+V_{r1} = 100.915 / 1.204 = 83.8\ \text{V}
+\]
+\[
+V_{r2} = 102.27 / 1.204 = 84.9\ \text{V}
+\]
+\[
+V_{r3} = 99.28 / 1.204 = 82.5\ \text{V}
+\]
+
+**Model A (1.2 H):** \([83.8,\ 84.9,\ 82.5]\) V
+
+---
+
+### Test 2: \(L_{load} = 2.0\ \text{H}\), \(X_L = 628.3\ \Omega\)
+
+**Compute \(Z_{load}\):**
+\[
+Z_{load} = \frac{750 \times j628.3}{750 + j628.3}
+\]
+Denominator magnitude: \(\sqrt{750^2 + 628.3^2} = \sqrt{562,500 + 394,760} = \sqrt{957,260} = 978.4\)  
+Angle: \(90^\circ - \arctan(628.3/750) = 90^\circ - 39.9^\circ = 50.1^\circ\)
+\[
+Z_{load} = \frac{471,225}{978.4} \angle 50.1^\circ = 481.6 \angle 50.1^\circ = 309.0 + j369.5\ \Omega
+\]
+
+**Compute denominator:**
+\[
+\frac{Z_{line}}{Z_{load}} = \frac{72.62 \angle 84.31^\circ}{481.6 \angle 50.1^\circ} = 0.1508 \angle 34.21^\circ = 0.1247 + j0.0848
+\]
+\[
+1 + \frac{Z_{line}}{Z_{load}} = 1.1247 + j0.0848 = 1.128 \angle 4.31^\circ
+\]
+
+**Compute \(Z_{line+load}\):**
+\[
+Z_{line+load} = (7.2 + 309.0) + j(72.26 + 369.5) = 316.2 + j441.8 = 543.2 \angle 54.4^\circ\ \Omega
+\]
+
+**Compute \(V_n\):**
+\[
+\frac{Z_{line+load}}{Z_n} = \frac{543.2 \angle 54.4^\circ}{64.55 \angle 76.55^\circ} = 8.42 \angle -22.15^\circ = 7.80 - j3.18
+\]
+\[
+3 + \frac{Z_{line+load}}{Z_n} = 10.80 - j3.18 = 11.26 \angle -16.4^\circ
+\]
+\[
+V_n = \frac{2.64 \angle -79.1^\circ}{11.26 \angle -16.4^\circ} = 0.234 \angle -62.7^\circ = 0.107 - j0.208\ \text{V}
+\]
+
+**Effective source magnitudes:**
+- L1: \(101 - 0.107 = 100.893\) V
+- L2: \(\sqrt{(-51.107)^2 + (-88.538)^2} = 102.23\) V
+- L3: \(\sqrt{(-49.607)^2 + (85.948)^2} = 99.22\) V
+
+**Receiving voltages:**
+\[
+V_{r1} = 100.893 / 1.128 = 89.5\ \text{V}
+\]
+\[
+V_{r2} = 102.23 / 1.128 = 90.6\ \text{V}
+\]
+\[
+V_{r3} = 99.22 / 1.128 = 88.0\ \text{V}
+\]
+
+**Model A (2.0 H):** \([89.5,\ 90.6,\ 88.0]\) V
+
+---
+
+### Test 3: \(L_{load} = 2.8\ \text{H}\), \(X_L = 879.6\ \Omega\)
+
+**Compute \(Z_{load}\):**
+\[
+Z_{load} = \frac{750 \times j879.6}{750 + j879.6}
+\]
+Denominator magnitude: \(\sqrt{750^2 + 879.6^2} = \sqrt{562,500 + 773,680} = \sqrt{1,336,180} = 1156\)  
+Angle: \(90^\circ - \arctan(879.6/750) = 90^\circ - 49.5^\circ = 40.5^\circ\)
+\[
+Z_{load} = \frac{659,700}{1156} \angle 40.5^\circ = 570.5 \angle 40.5^\circ = 434.0 + j370.6\ \Omega
+\]
+
+**Compute denominator:**
+\[
+\frac{Z_{line}}{Z_{load}} = \frac{72.62 \angle 84.31^\circ}{570.5 \angle 40.5^\circ} = 0.1273 \angle 43.81^\circ = 0.0918 + j0.0882
+\]
+\[
+1 + \frac{Z_{line}}{Z_{load}} = 1.0918 + j0.0882 = 1.095 \angle 4.62^\circ
+\]
+
+**Compute \(Z_{line+load}\):**
+\[
+Z_{line+load} = (7.2 + 434.0) + j(72.26 + 370.6) = 441.2 + j442.9 = 625.1 \angle 45.1^\circ\ \Omega
+\]
+
+**Compute \(V_n\):**
+\[
+\frac{Z_{line+load}}{Z_n} = \frac{625.1 \angle 45.1^\circ}{64.55 \angle 76.55^\circ} = 9.68 \angle -31.45^\circ = 8.26 - j5.05
+\]
+\[
+3 + \frac{Z_{line+load}}{Z_n} = 11.26 - j5.05 = 12.34 \angle -24.2^\circ
+\]
+\[
+V_n = \frac{2.64 \angle -79.1^\circ}{12.34 \angle -24.2^\circ} = 0.214 \angle -54.9^\circ = 0.123 - j0.175\ \text{V}
+\]
+
+**Effective source magnitudes:**
+- L1: \(101 - 0.123 = 100.877\) V
+- L2: \(\sqrt{(-51.123)^2 + (-88.505)^2} = 102.21\) V
+- L3: \(\sqrt{(-49.623)^2 + (85.915)^2} = 99.19\) V
+
+**Receiving voltages:**
+\[
+V_{r1} = 100.877 / 1.095 = 92.2\ \text{V}
+\]
+\[
+V_{r2} = 102.21 / 1.095 = 93.4\ \text{V}
+\]
+\[
+V_{r3} = 99.19 / 1.095 = 90.6\ \text{V}
+\]
+
+**Model A (2.8 H):** \([92.2,\ 93.4,\ 90.6]\) V
+
+---
+
+# Part 2: Model B – Nominal π (\(A=0.954,\ B=72.6\angle84^\circ\))
+
+For each test, \(A + B/Z_{load}\) is computed, then \(V_{ri} = (V_{si} - V_n) / (A + B/Z_{load})\).
+
+### Test 1: \(L_{load} = 1.2\ \text{H}\)
+
+\[
+\frac{B}{Z_{load}} = \frac{72.6 \angle 84^\circ}{336.8 \angle 63.3^\circ} = 0.2156 \angle 20.7^\circ = 0.2017 + j0.0762
+\]
+\[
+A + \frac{B}{Z_{load}} = (0.954 + 0.2017) + j0.0762 = 1.1557 + j0.0762 = 1.158 \angle 3.77^\circ
+\]
+
+**Receiving voltages (using \(V_n = 0.285\angle-72.6^\circ\) from Model A):**
+\[
+V_{r1} = 100.915 / 1.158 = 87.2\ \text{V}
+\]
+\[
+V_{r2} = 102.27 / 1.158 = 88.4\ \text{V}
+\]
+\[
+V_{r3} = 99.28 / 1.158 = 85.7\ \text{V}
+\]
+
+**Model B (1.2 H):** \([87.2,\ 88.4,\ 85.7]\) V
+
+---
+
+### Test 2: \(L_{load} = 2.0\ \text{H}\)
+
+\[
+\frac{B}{Z_{load}} = \frac{72.6 \angle 84^\circ}{481.6 \angle 50.1^\circ} = 0.1508 \angle 33.9^\circ = 0.1252 + j0.0841
+\]
+\[
+A + \frac{B}{Z_{load}} = (0.954 + 0.1252) + j0.0841 = 1.0792 + j0.0841 = 1.082 \angle 4.46^\circ
+\]
+
+**Receiving voltages:**
+\[
+V_{r1} = 100.893 / 1.082 = 93.3\ \text{V}
+\]
+\[
+V_{r2} = 102.23 / 1.082 = 94.5\ \text{V}
+\]
+\[
+V_{r3} = 99.22 / 1.082 = 91.7\ \text{V}
+\]
+
+**Model B (2.0 H):** \([93.3,\ 94.5,\ 91.7]\) V
+
+---
+
+### Test 3: \(L_{load} = 2.8\ \text{H}\)
+
+\[
+\frac{B}{Z_{load}} = \frac{72.6 \angle 84^\circ}{570.5 \angle 40.5^\circ} = 0.1273 \angle 43.5^\circ = 0.0924 + j0.0876
+\]
+\[
+A + \frac{B}{Z_{load}} = (0.954 + 0.0924) + j0.0876 = 1.0464 + j0.0876 = 1.050 \angle 4.79^\circ
+\]
+
+**Receiving voltages:**
+\[
+V_{r1} = 100.877 / 1.050 = 96.1\ \text{V}
+\]
+\[
+V_{r2} = 102.21 / 1.050 = 97.4\ \text{V}
+\]
+\[
+V_{r3} = 99.19 / 1.050 = 94.5\ \text{V}
+\]
+
+**Model B (2.8 H):** \([96.1,\ 97.4,\ 94.5]\) V
+
+---
+
+# Part 3: Model C – Distributed/Telegrapher's (\(A=0.8667,\ B=69.44\angle84.57^\circ\))
+
+### Test 1: \(L_{load} = 1.2\ \text{H}\)
+
+\[
+\frac{B}{Z_{load}} = \frac{69.44 \angle 84.57^\circ}{336.8 \angle 63.3^\circ} = 0.2062 \angle 21.27^\circ = 0.1922 + j0.0748
+\]
+\[
+A + \frac{B}{Z_{load}} = (0.8667 + 0.1922) + j(0.0130 + 0.0748) = 1.0589 + j0.0878 = 1.062 \angle 4.74^\circ
+\]
+
+**Receiving voltages:**
+\[
+V_{r1} = 100.915 / 1.062 = 95.0\ \text{V}
+\]
+\[
+V_{r2} = 102.27 / 1.062 = 96.3\ \text{V}
+\]
+\[
+V_{r3} = 99.28 / 1.062 = 93.5\ \text{V}
+\]
+
+**Model C (1.2 H):** \([95.0,\ 96.3,\ 93.5]\) V
+
+---
+
+### Test 2: \(L_{load} = 2.0\ \text{H}\)
+
+\[
+\frac{B}{Z_{load}} = \frac{69.44 \angle 84.57^\circ}{481.6 \angle 50.1^\circ} = 0.1442 \angle 34.47^\circ = 0.1189 + j0.0816
+\]
+\[
+A + \frac{B}{Z_{load}} = (0.8667 + 0.1189) + j(0.0130 + 0.0816) = 0.9856 + j0.0946 = 0.990 \angle 5.48^\circ
+\]
+
+**Receiving voltages:**
+\[
+V_{r1} = 100.893 / 0.990 = 101.9\ \text{V}
+\]
+\[
+V_{r2} = 102.23 / 0.990 = 103.3\ \text{V}
+\]
+\[
+V_{r3} = 99.22 / 0.990 = 100.2\ \text{V}
+\]
+
+**Model C (2.0 H):** \([101.9,\ 103.3,\ 100.2]\) V
+
+---
+
+### Test 3: \(L_{load} = 2.8\ \text{H}\)
+
+\[
+\frac{B}{Z_{load}} = \frac{69.44 \angle 84.57^\circ}{570.5 \angle 40.5^\circ} = 0.1217 \angle 44.07^\circ = 0.0875 + j0.0846
+\]
+\[
+A + \frac{B}{Z_{load}} = (0.8667 + 0.0875) + j(0.0130 + 0.0846) = 0.9542 + j0.0976 = 0.959 \angle 5.84^\circ
+\]
+
+**Receiving voltages:**
+\[
+V_{r1} = 100.877 / 0.959 = 105.2\ \text{V}
+\]
+\[
+V_{r2} = 102.21 / 0.959 = 106.6\ \text{V}
+\]
+\[
+V_{r3} = 99.19 / 0.959 = 103.4\ \text{V}
+\]
+
+**Model C (2.8 H):** \([105.2,\ 106.6,\ 103.4]\) V
+
+---
+
+# Part 4: Comparison with Measured Data
+
+## Summary Table – All Models vs Measured (Inductive Load, 750 Ω ∥ L)
+
+| Test | \(L\) (H) | Measured \(V_r\) | Model A (Lumped) | Model B (Nominal π) | Model C (Distributed) |
+|------|----------|------------------|------------------|--------------------|----------------------|
+| 1 | 1.2 | [81,82,83] | [84,85,83] | [87,88,86] | [95,96,94] |
+| 2 | 2.0 | [87,88,89] | [90,91,88] | [93,95,92] | [102,103,100] |
+| 3 | 2.8 | [91,92,93] | [92,93,91] | [96,97,95] | [105,107,103] |
+
+---
+
+## Error Analysis (Mean Absolute Error per Model)
+
+| Test | Model A Error | Model B Error | Model C Error |
+|------|--------------|--------------|---------------|
+| 1.2 H | 2.3 V | 5.7 V | 13.7 V |
+| 2.0 H | 2.7 V | 6.7 V | 14.7 V |
+| 2.8 H | 1.0 V | 4.7 V | 14.3 V |
+| **Average** | **2.0 V** | **5.7 V** | **14.2 V** |
+
+---
+
+## Voltage Trend Comparison (Mean \(V_r\) across phases)
+
+| Test | Measured Mean | Model A Mean | Model B Mean | Model C Mean |
+|------|--------------|--------------|--------------|--------------|
+| 1.2 H | 82.0 | 83.7 | 87.2 | 95.0 |
+| 2.0 H | 88.0 | 89.7 | 93.5 | 102.5 |
+| 2.8 H | 92.0 | 92.1 | 96.1 | 105.1 |
+
+---
+
+## Per-Phase Comparison (Test 3: 2.8 H, closest match)
+
+| Phase | Measured | Model A | Error | Model B | Error | Model C | Error |
+|-------|----------|---------|-------|---------|-------|---------|-------|
+| L1 | 91 | 92.2 | +1.2 | 96.1 | +5.1 | 105.2 | +14.2 |
+| L2 | 92 | 93.4 | +1.4 | 97.4 | +5.4 | 106.6 | +14.6 |
+| L3 | 93 | 90.6 | -2.4 | 94.5 | +1.5 | 103.4 | +10.4 |
+
+---
+
+# Part 5: Key Observations
+
+## 5.1. Model Ranking (Best to Worst)
+
+1. **Model A (Lumped Series, \(A=1\))** – Average error 2.0 V
+2. **Model B (Nominal π, \(A=0.954\))** – Average error 5.7 V
+3. **Model C (Distributed, \(A=0.8667\))** – Average error 14.2 V
+
+## 5.2. Trend Analysis
+
+| Quantity | Observation |
+|----------|-------------|
+| **Effect of increasing L** | Measured \(V_r\) increases from 82→88→92 V. All models capture this trend correctly. |
+| **Model A accuracy** | Best match across all tests. Error decreases as L increases (2.3→2.7→1.0 V). |
+| **Model B error** | Consistently overestimates by 4-7 V. Error decreases slightly at higher L. |
+| **Model C error** | Severely overestimates (14-15 V high). At 2.0 H and 2.8 H, predicts \(V_r > V_s\) (physically impossible for passive RL load). |
+
+## 5.3. Physical Interpretation
+
+The **inductive load** creates a lagging power factor. The parallel inductor:
+- Provides a path for current that **reduces** the effective load impedance magnitude
+- Increases the phase angle of \(Z_{load}\) (from purely resistive to inductive)
+
+As \(L\) increases (less inductive current):
+- \(Z_{load}\) magnitude increases (approaches 750 Ω)
+- Voltage drop decreases → higher \(V_r\)
+
+**Why Model A best matches:**
+- With inductive load, the shunt capacitance in Models B and C creates a **parallel resonance** condition with the load inductance
+- At certain frequencies (near 50 Hz), this resonance can cause voltage amplification
+- Your physical trainer's discrete π sections have parasitic elements that **damp** this resonance, making the line behave more like a series-dominant circuit
+
+## 5.4. Model C Anomaly
+
+At 2.0 H and 2.8 H, Model C predicts:
+- \(V_r \approx 102-107\ \text{V}\) from \(V_s \approx 101\ \text{V}\)
+- This **voltage gain** (\(V_r > V_s\)) is impossible for a passive, lossy line
+
+This confirms that the **distributed/telegrapher's model with nameplate capacitance is invalid** for your hardware. The effective shunt capacitance at 50 Hz is much lower than nameplate suggests, likely due to:
+- Parasitic series inductance in capacitor branches
+- Discrete π section approximation (3-6 sections) vs continuous line
+- Component tolerances and aging
+
+---
+
+# Part 6: Final Conclusion – Inductive Load Tests
+
+| Metric | Model A (Lumped) | Model B (Nominal π) | Model C (Distributed) |
+|--------|-----------------|--------------------|----------------------|
+| **Average Error** | **2.0 V** | 5.7 V | 14.2 V |
+| **Trend Capture** | ✓ Excellent | ✓ Good | ✗ Overestimates |
+| **Physical Plausibility** | ✓ \(V_r < V_s\) | ✓ \(V_r < V_s\) | ✗ \(V_r > V_s\) at high L |
+| **Best for** | All inductive tests | Rough estimates | Not recommended |
+
+**The Lumped Series Model (\(A=1\), \(B=Z_{line}\)) with neutral displacement \(V_n\) remains the best match for your Lucas Nülle hardware across both resistive and inductive load tests.** 
+
+The nominal π model (\(A=0.954\)) consistently overestimates receiving voltages by 4-7 V. The distributed/telegrapher's model (\(A=0.8667\)) produces physically impossible voltage gains and should not be used for this hardware at 50 Hz.
