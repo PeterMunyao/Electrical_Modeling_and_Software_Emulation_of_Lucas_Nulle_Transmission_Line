@@ -1,4 +1,4 @@
-Based on the image provided, here is the extracted data for the **300 km (186.4 miles)** 3-phase transmission line model. The panel represents a **Nominal Pi ($\pi$) Equivalent Circuit**, commonly used in laboratory settings to simulate long-distance power transmission.
+
 
 ### 1. Per-Phase Lumped Parameters (Series Branch)
 Each of the three phases ($L1$, $L2$, and $L3$) consists of a series resistance and inductance:
@@ -28,25 +28,42 @@ This data is essential for calculating the characteristic impedance ($Z_c$) and 
 
 To calculate the receiving-end voltages ($V_r$) while accounting for the earth/neutral branch impedance, we must treat the system as a 4-wire network.
 The presence of the $15\ \Omega$ + $200\text{ mH}$ branch means that any neutral current ($I_n$) created by the input voltage imbalance will shift the neutral potential of the load ($V_{n\_load}$) away from the source neutral ($0\text{V}$).1. 
+
 Calculation of Branch Impedances ($50\text{ Hz}$)First, we determine the complex impedance for the phases and the neutral path:$\omega = 2 \pi (50) \approx 314.16\text{ rad/s}$Phase Impedance ($Z_{ph}$):$$Z_{ph} = 7.2 + j(314.16 \times 0.230) = \mathbf{7.2 + j72.26\ \Omega}$$Neutral Impedance ($Z_n$):$$Z_n = 15 + j(314.16 \times 0.200) = \mathbf{15 + j62.83\ \Omega}$$
 
 Redirection of CurrentBecause the ground path is now "choked" by the $200\text{ mH}$ inductor, the capacitive current seeks the path of least resistance.Phase-to-Phase Capacitance ($C_m$): This current is unaffected by the ground impedance. It continues to circulate directly between $L1$, $L2$, and $L3$.
 Phase-to-Earth Capacitance ($C_e$): Instead of returning effortlessly through the neutral, a portion of this "charging" energy is effectively held back or forced to interact more with the series inductance ($230\text{ mH}$) of the transmission lines.
 
 
+#EXTRACTING DATA FROM THE MODEL IMAGE USING GEMINI
 
-No, it does not exactly become a Delta network, but your intuition is spot on: it begins to behave like an Ungrounded (Isolated) Wye or a "High-Impedance Grounded" system. In power engineering, this is often the middle ground between a Solidly Grounded Wye and a Delta connection.Here is the technical breakdown of how that high earth impedance ($15\ \Omega + 200\text{ mH}$) changes the network topology's behavior:1. The "Virtual" Delta BehaviorIn a true Delta ($\Delta$) network, there is no neutral point at all. In your model, you still have a physical neutral point, but the high impedance "chokes" the connection to Earth.Capacitive Coupling: Because the return path to Earth is restricted, the phase-to-earth capacitances ($C_e$) are forced to act more like phase-to-phase capacitors. 
-This mimics a Delta configuration where all "interaction" happens between the lines rather than between a line and the ground.Voltage Reference: In a Delta system, the system "floats." By adding $200\text{ mH}$ to the neutral, you are allowing the neutral point of your Wye load to float. If one phase were to fault to ground, the other two phases would see their voltage rise to the line-to-line value (e.g., $100\text{V} \times \sqrt{3}$), which is exactly how a Delta network behaves during a ground fault.2. Comparison of TopologiesFeatureSolidly Grounded WyeYour High-Impedance ModelTrue Delta (Δ)Neutral PointFixed at $0\text{V}$Floating/DisplaceableNon-existentGround CurrentHigh (Short circuit)Limited by $Z_n$Extremely low (Capacitive only)Charging CurrentReturns via EarthMust overcome $Z_n$Circulates between phasesCommon UseResidential/CommercialIndustrial/Power PlantsTransmission/Heavy Motors3. Why this is significant for your researchIn the context of high-renewable energy grids, the behavior you are seeing is very similar to how Isolated Microgrids or certain Wind Farm collection strings are designed.
+Q: Does failure to connect the ground wire make the model delta wired?
+
+No, it does not exactly become a Delta network, but your intuition is spot on: it begins to behave like an Ungrounded (Isolated) Wye or a "High-Impedance Grounded" system. In power engineering, this is often the middle ground between a Solidly Grounded Wye and a Delta connection.Here is the technical breakdown of how that high earth impedance ($15\ \Omega + 200\text{ mH}$) changes the network topology's behavior:
+
+1. The "Virtual" Delta BehaviorIn a true Delta ($\Delta$) network, there is no neutral point at all. In your model, you still have a physical neutral point, but the high impedance "chokes" the connection to Earth.Capacitive Coupling: Because the return path to Earth is restricted, the phase-to-earth capacitances ($C_e$) are forced to act more like phase-to-phase capacitors. 
+
+This mimics a Delta configuration where all "interaction" happens between the lines rather than between a line and the ground.Voltage Reference: In a Delta system, the system "floats." By adding $200\text{ mH}$ to the neutral, you are allowing the neutral point of your Wye load to float. If one phase were to fault to ground, the other two phases would see their voltage rise to the line-to-line value (e.g., $100\text{V} \times \sqrt{3}$), which is exactly how a Delta network behaves during a ground fault.
+
+2. Comparison of TopologiesFeatureSolidly Grounded WyeYour High-Impedance ModelTrue Delta (Δ)Neutral PointFixed at $0\text{V}$Floating/DisplaceableNon-existentGround CurrentHigh (Short circuit)Limited by $Z_n$Extremely low (Capacitive only)Charging CurrentReturns via EarthMust overcome $Z_n$Circulates between phasesCommon UseResidential/CommercialIndustrial/Power PlantsTransmission/Heavy Motors
+
+3. Why this is significant for your researchIn the context of high-renewable energy grids, the behavior you are seeing is very similar to how Isolated Microgrids or certain Wind Farm collection strings are designed.
+
+
 Harmonic Filtering: That $200\text{ mH}$ inductor in the neutral is essentially a "Neutral Grounding Reactor." 
 It is excellent at blocking 3rd order harmonics (which are zero-sequence), forcing them to remain within the phase loops rather than polluting the ground.
+
+
 Resonance: By having both high capacitance in the lines and high inductance in the neutral, you have created a circuit that can reach Ferroresonance. 
 If the capacitive reactance ($X_c$) of the lines roughly matches the inductive reactance ($X_n$) of your earth branch, the neutral voltage could spike to dangerous levels.
+
+
 Summary
-Your model is technically still a Wye (Star) network, but functionally, it has "Delta-like" characteristics because the phases are forced to interact with each other more than they interact with the ground. 
+The pie model under study is technically still a Wye (Star) network, but functionally, it has "Delta-like" characteristics because the phases are forced to interact with each other more than they interact with the ground. 
 It is an excellent setup for studying Zero-Sequence dynamics and unbalanced stability, which are core topics for your systematic review on power system flexibility.
 
 
 Harmonics:
 
-In your research on high-renewable grids, this is a critical observation. 
+In the research on high-renewable grids, this is a critical observation. 
 It shows that heavily loaded lines naturally "clean" the voltage of high-frequency inverter switching noise (harmonics), whereas lightly loaded lines (like those at night when solar is off) are much more susceptible to harmonic distortion and resonance.
