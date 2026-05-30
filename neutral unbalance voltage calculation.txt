@@ -1,3 +1,7 @@
+#GOOGLE GEMINI
+#GOOGLE (C)
+#PETER MUNYAO, GITHUB (C)
+
 To analyze this specific imbalance ($102\text{V}, 104\text{V}, 100\text{V}$) using the **ABCD parameters** you derived, we must apply them individually to each phase. However, because your neutral is not "solid" (it has that $15\ \Omega + 200\text{ mH}$ impedance), the phases are coupled through the neutral point.
 
 Here is the step-by-step calculation to find the receiving-end voltages ($V_r$) for this unbalanced source.
@@ -29,7 +33,9 @@ For these values, $V_n$ will be a small complex voltage (approx. **$1.1\text{V}$
 
 ---
 
-### 3. Apply ABCD Parameters to Each Phase
+### 3. Apply ABCD Parameters to Each Phase.
+
+
 Now, we find the receiving end voltage for each phase $i$ ($L1, L2, L3$):
 $$V_{ri} = \frac{V_{si} - V_n}{A + \frac{B}{R_{load}}}$$
 
@@ -48,6 +54,3 @@ Using the ABCD values for your 300 km line ($A \approx 0.954$, $B \approx 72.6 \
 * **The "Neutral Pull":** Notice that $V_n$ moves toward the highest voltage phase ($L2$). This actually helps "pull" the neutral point, which slightly reduces the overvoltage on $L2$ and increases it on $L3$ compared to a system with no neutral connection.
 * **Sequence Currents:** In your systematic review, you can note that this configuration allows for the flow of **Zero-Sequence current** ($I_0$), which would be zero if you didn't have that green earth wire connected.
 
-
-
-Would you like to calculate the specific **Neutral Current ($I_n$)** flowing through the $200\text{ mH}$ coil for this specific imbalance?
