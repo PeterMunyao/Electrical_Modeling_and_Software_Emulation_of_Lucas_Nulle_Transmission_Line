@@ -1,12 +1,14 @@
-# 含太阳能光伏和随机负荷变动的长输电网络中的准动态电压角稳定性和功率灵活性
-Quasi-Dynamic Voltage Angle Stability and Power Flexibility in Long Transmission Networks with Solar PV and Stochastic Load Variability
+# 高光伏电网灵活性研究中物理传输线模型及准动态仿真的实验验证
+Experimental Validation of a Physical Transmission-Line Model and Quasi-Dynamic Simulation for High-PV Grid Flexibility Studies.
 
-Quasi-dynamic stability analysis captures power system behavior over medium to long-term time horizons under slowly varying
-disturbances by bridging static power flow and full dynamic simulation. It assumes rapid decay of fast transients, enabling represen-
-tation of the system as a sequence of quasi-steady-state operating points. This paper develops a quasi-dynamic stability framework
-for high-renewable power systems by integrating stochastic solar PV generation and data center load variability within a cou-
-pled modeling and validation structure. The approach combines a physical hardware emulator (Lucas-Nülle 300 km π-equivalent
-transmission model) with Python-based distributed-parameter simulations derived from the Telegrapher’s equations. The classical
-power transfer capability from P − δ relationship is evaluated under both lumped and distributed representations, including high
-capacitive-compensated transmission conditions where voltage stability and reactive power sensitivity are strongly dependent on
-total line impedance.
+准确的传输线模型对于高光伏渗透率下电力系统灵活性的硬件验证与准动态评估至关重要。本研究对一套300公里三相 Lucas-Nülle 物理传输线模型进行了实验验证，并将实验获得的电气参数进一步应用于准动态潮流仿真。在电阻性和感性负载条件下，以物理模型为基准，对三种软件传输线模型——集中串联模型、标称π型模型和分布参数模型——进行了对比评估。结果表明，集中串联模型与物理基准的吻合度最高，其受端电压平均误差为2.0 V；标称π型模型则高估受端电压4.7–6.7 V。分布参数模型表现出更大的偏差，平均误差达到14.2 V，并且未能准确再现实验中观察到的电压放大特性。上述结果表明，集中串联模型是描述该物理传输线基准最合适的电气等效模型，并因此被选用于后续系统级研究。
+
+随后，对经实验验证的线路参数进行尺度变换，并在 DIgSILENT PowerFactory 中将其构建为三母线环形网络中的300公里传输线路。采用牛顿–拉夫逊潮流方法，结合2024年光伏发电和数据中心负荷时序曲线，对时变网络运行状态进行准动态求解。结果显示，电网功率呈现显著的双向波动特征，最大供电功率和最大吸收功率分别达到22.35 MW和37.70 MW，最大净爬坡率为4.55 MW/5 min，对应的能量转移需求达到162.4 MWh。对于数据中心配置，所确定的最低灵活性设计要求包括9.71 MW/5 min的爬坡能力、96.63 MWh的能量容量以及18.07 MW的功率额定值。
+
+总体而言，本研究建立了从物理传输线实验验证、模型筛选与参数尺度变换，到系统级准动态仿真和灵活性需求量化的系统性技术路径，为高光伏渗透率电力系统的灵活性评估提供了具有物理实测基础的建模与分析框架。
+
+Accurate transmission-line representation is essential for hardware validation and quasi-dynamic assessment of power-system flexibility under high photovoltaic (PV) penetration. This study experimentally validates a 300-km three-phase Lucas-Nülle physical transmission-line model and subsequently applies its experimentally derived electrical parameters to quasi-dynamic power-flow simulations. Three software representations—lumped series, nominal-π, and distributed-parameter models—are evaluated against the physical benchmark under resistive and inductive loading conditions. The lumped-series model provides the closest agreement with the physical benchmark, with a mean receiving-end voltage error of 2.0 V, whereas the nominal-π model overestimates the voltage by 4.7–6.7 V. The distributed-parameter model exhibits a larger mean deviation of 14.2 V and a mismatch in the observed voltage amplification. These results establish the lumped-series representation as the most appropriate electrical equivalent for the validated physical benchmark and support its subsequent application at the system level.
+
+The experimentally validated line parameters are then scaled and embedded as a 300-km transmission line within a three-bus ring network in DIgSILENT PowerFactory. Newton–Raphson power flow is employed with 2024 PV-generation and data-centre load profiles to solve the resulting time-varying network operating points. The simulations reveal substantial bidirectional grid-power variability, with maximum grid supply and absorption of 22.35 MW and 37.70 MW, respectively, and a maximum net ramp rate of 4.55 MW/5 min. The corresponding energy-shifting requirement reaches 162.4 MWh. For the data-centre configuration, the minimum flexibility design requirements are a ramping capability of 9.71 MW/5 min, an energy capacity of 96.63 MWh, and a power rating of 18.07 MW.
+
+Overall, the results establish a systematic pathway from experimental transmission-line validation to parameter-scaled system-level quasi-dynamic simulation, providing a physically grounded basis for assessing flexibility requirements in high-PV power systems.
